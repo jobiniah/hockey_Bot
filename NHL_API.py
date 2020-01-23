@@ -95,3 +95,40 @@ def getPlayerData(season, relevant_Players):
       else:
           df = df.append(new_Data, sort=False, ignore_index=True)
   return df
+
+def makeTimeNumeric(List):
+    reformatted=[]
+    for i in range(len(List)):
+        minit,sec=List[i].split(":")
+        reformatted.append( ( int(sec)+60*int(minit) )/3600 )
+    return reformatted
+
+def boolToNumeric(List):
+    reformatted = []
+    for i in range(len(List)):
+        if(List[i]):
+            reformatted.append(1)
+        else:
+            reformatted.append(.5)
+    return reformatted
+
+divideBySixty = lambda x: x/60
+
+def positionToNumeric(List):
+    reformatted = []
+    for i in range(len(List)):
+        if(List[i]=="D"):
+            reformatted.append(.25)
+        elif(List[i]=="C"):
+            reformatted.append(.5)
+        elif(List[i]=="L"):
+            reformatted.append(.75)
+        elif(List[i]=="R"):
+            reformatted.append(1.0)
+    return reformatted
+
+def percentToDecimal(List):
+    reformatted = []
+    for i in range(len(List)):
+        reformatted.append( List[i]/100 )
+    return reformatted
