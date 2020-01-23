@@ -135,6 +135,7 @@ def percentToDecimal(List):
 
 def reformatData( data ):
     df = data
+    df = df.loc[ df["position"]!="G" ] #filter out goalies
     df.fillna(0)
 
     for attr in ["timeOnIce","powerPlayTimeOnIce","evenTimeOnIce","shortHandedTimeOnIce"]:
