@@ -157,3 +157,10 @@ def reformatData( data ):
     
     df = df.sort_values(["year","month","day"], ascending=False)
     return df
+
+def dropExtraData(data):
+    df = data
+    extra_columns = ['player', 'position','season', 'team', 'opponent', 'date', 'day', 'month', 'year']
+    df = df.drop(extra_columns, axis=1)
+    df = df.fillna(0)
+    return df
