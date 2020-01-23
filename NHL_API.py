@@ -132,3 +132,27 @@ def percentToDecimal(List):
     for i in range(len(List)):
         reformatted.append( List[i]/100 )
     return reformatted
+
+def reformatData( data ):
+    df = data
+    df.fillna(0)
+
+    for attr in ["timeOnIce","powerPlayTimeOnIce","evenTimeOnIce","shortHandedTimeOnIce"]:
+        df[attr] = makeTimeNumeric( df[attr].tolist() )
+    
+    df["penaltyMinutes"] = list(map(divideBySixty, df["penaltyMinutes"].tolist()))
+
+    for attr in ["isHome", "isWin","isOT"]:
+        df[attr] = boolToNumeric( df[attr].tolist() )
+    
+    for attr in ["faceOffPct",'shotPct']:
+        df[attr] = percentToDecimal( df[attr].tolist() )
+
+    df["position"] = positionToNumeric( df["position"].tolist() )
+    goalieColumns=df.columns[36:].tolist()
+    df = df.drop(goalieColumns, axis=1)
+    df = df.drop(["overTimeGoals","powerPlayPoints"], axis=1)
+    df["fantasyPoints"] = list(map(lambda x: x/20, df["fantasyPoints"].tolist()))
+    
+    df = df.sort_values(["year","month","day"], ascending=False)
+    return df
