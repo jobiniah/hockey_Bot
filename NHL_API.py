@@ -141,7 +141,7 @@ def reformatData( data ):
     for attr in ["timeOnIce","powerPlayTimeOnIce","evenTimeOnIce","shortHandedTimeOnIce"]:
         df[attr] = makeTimeNumeric( df[attr].tolist() )
     
-    df["penaltyMinutes"] = list(map(divideBySixty, df["penaltyMinutes"].tolist()))
+    df["penaltyMinutes"] = list(map(divideBySixty, list(map(int,df["penaltyMinutes"].tolist()))))
 
     for attr in ["isHome", "isWin","isOT"]:
         df[attr] = boolToNumeric( df[attr].tolist() )
