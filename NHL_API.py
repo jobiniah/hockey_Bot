@@ -136,7 +136,7 @@ def percentToDecimal(List):
 def reformatData( data ):
     df = data
     df = df.loc[ df["position"]!="G" ] #filter out goalies
-    df.fillna(0)
+    df = df.fillna(0)
 
     for attr in ["timeOnIce","powerPlayTimeOnIce","evenTimeOnIce","shortHandedTimeOnIce"]:
         df[attr] = makeTimeNumeric( df[attr].tolist() )
@@ -153,14 +153,15 @@ def reformatData( data ):
     goalieColumns=df.columns[36:].tolist()
     df = df.drop(goalieColumns, axis=1)
     df = df.drop(["overTimeGoals","powerPlayPoints"], axis=1)
-    df["fantasyPoints"] = list(map(lambda x: x/20, df["fantasyPoints"].tolist()))
+    df["fantasyPoints"] = list( map( int, df["fantasyPoints"].tolist() ) )
+    df["plusMinus"] = map( lambda x: (x+7)/13, df["plusMinus"].tolist() )
     
     df = df.sort_values(["year","month","day"], ascending=False)
     return df
 
 def dropExtraData(data):
     df = data
-    extra_columns = ['player', 'position','season', 'team', 'opponent', 'date', 'day', 'month', 'year']
+    extra_columns = ['player', 'games', 'position','season', 'team', 'opponent', 'date', 'day', 'month', 'year']
     df = df.drop(extra_columns, axis=1)
     df = df.fillna(0)
     return df
