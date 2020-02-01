@@ -154,7 +154,7 @@ def reformatData( data ):
     df = df.drop(goalieColumns, axis=1)
     df = df.drop(["overTimeGoals","powerPlayPoints"], axis=1)
     df["fantasyPoints"] = list( map( int, df["fantasyPoints"].tolist() ) )
-    df["plusMinus"] = map( lambda x: (x+7)/13, df["plusMinus"].tolist() )
+    df["plusMinus"] = list(map( lambda x: (x+7)/13, df["plusMinus"].tolist() ))
     
     df = df.sort_values(["year","month","day"], ascending=False)
     return df
